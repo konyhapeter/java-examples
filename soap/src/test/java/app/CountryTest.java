@@ -1,40 +1,41 @@
 package app;
 
-import org.junit.jupiter.api.Assertions;
+import com.baeldung.springsoap.gen.Currency;
+import com.baeldung.springsoap.gen.GetCountryRequest;
+import com.baeldung.springsoap.gen.GetCountryResponse;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.ws.client.core.WebServiceTemplate;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeoutException;
-import java.util.stream.Collectors;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class CountryTest {
 
-
-    private static final String COMMAND = "curl --header \"content-type: text/xml\" --data @src/test/resources/polandRequest.xml http://localhost:8090/ws";
-
-    Logger logger = LoggerFactory.getLogger(CountryTest.class);
+    @Autowired
+    private WebServiceTemplate webServiceTemplate;
 
     @Test
-    public void testPoland() throws IOException, InterruptedException, ExecutionException, TimeoutException {
-        ProcessBuilder processBuilder = new ProcessBuilder(COMMAND.split(" "));
-        processBuilder.redirectErrorStream(true);
-        Process process = processBuilder.start();
+    public void testPoland() {
+        //given
+        GetCountryRequest request = new GetCountryRequest();
+        request.setName("Poland");
 
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
-            String result = reader.lines().collect(Collectors.joining("\n"));
-            result = "\n" + result;
-            logger.info(result);
-        }
+        String url = "http://localhost:8090/ws";
 
-        int expectedExitCode = 0;
-        int exitCode = process.waitFor();
-        Assertions.assertEquals(expectedExitCode, exitCode, "Exitcode should be " + expectedExitCode);
+        //when
+        GetCountryResponse response = (GetCountryResponse) webServiceTemplate
+                .marshalSendAndReceive(url, request);
+
+        //then
+        String capital = "Warsaw";
+        Currency currency = Currency.PLN;
+        int population = 50;
+
+        assertEquals(capital, response.getCountry().getCapital(), "Capital should be " + capital);
+        assertEquals(currency, response.getCountry().getCurrency(), "Currency should be " + currency);
+        assertEquals(population, response.getCountry().getPopulation(), "Population should be " + population);
+
     }
 }
