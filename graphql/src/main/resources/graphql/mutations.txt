@@ -1,0 +1,18 @@
+mutation {
+  addBookToAuthor(
+    bookRequest: {
+        id: "book-4"
+        name: "Yet Another book2"
+        pageCount: 220
+        authorId: "author-3"
+        }
+  ) {
+    id
+    firstName
+    lastName
+    books {
+      id
+      name
+    }
+  }
+}
