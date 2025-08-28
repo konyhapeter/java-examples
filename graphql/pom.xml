@@ -20,5 +20,16 @@
             <artifactId>spring-graphql-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- WebFlux is required for subscriptions -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.projectreactor</groupId>
+            <artifactId>reactor-test</artifactId>
+            <version>3.8.0-M6</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 </project>

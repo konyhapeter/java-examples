@@ -3,3 +3,14 @@ server:
 spring:
   graphql:
     path: /graphql
+    websocket:
+      path: /ws/graphql # WebSocket endpoint for subscriptions
+  schema:
+    printer:
+      enabled: true
+logging:
+  level:
+    graphql: DEBUG
+    org:
+      springframework:
+        graphql: DEBUG

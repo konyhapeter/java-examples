@@ -3,14 +3,19 @@ package app.controller;
 import app.model.Author;
 import app.model.Book;
 import app.model.BookInput;
-import org.reactivestreams.Publisher;
+import app.model.Message;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.graphql.data.method.annotation.*;
 import org.springframework.stereotype.Controller;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Sinks;
 
+import java.time.Duration;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
+@Slf4j
 public class BookController {
 
     private final Sinks.Many<Book> sink = Sinks.many().multicast().onBackpressureBuffer();
@@ -31,7 +36,7 @@ public class BookController {
     }
 
     @SchemaMapping
-    public List<Book> books(Author author){
+    public List<Book> books(Author author) {
         return Book.getAllBooks().stream().filter(book -> book.authorId().equals(author.id())).toList();
     }
 
@@ -43,8 +48,9 @@ public class BookController {
     }
 
     @SubscriptionMapping
-    public Publisher<Book> bookAdded(){
-        return sink.asFlux();
-        //https://chatgpt.com/c/68a4cd92-e6d8-8322-aef5-22e32562c587
+    public Flux<Message> bookAdded() {
+        log.info("bookAdded called");
+        return Flux.interval(Duration.ofSeconds(1))
+                .map(i -> new Message(UUID.randomUUID().toString(), "Message number" + i));
     }
 }

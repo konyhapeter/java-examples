@@ -13,7 +13,12 @@ input BookInput {
 }
 
 type Subscription {
-    bookAdded: Book!
+    bookAdded: Message!
+}
+
+type Message {
+    id: ID!
+    text: String!
 }
 
 
