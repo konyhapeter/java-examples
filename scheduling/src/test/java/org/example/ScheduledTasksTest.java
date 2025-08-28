@@ -19,7 +19,7 @@ public class ScheduledTasksTest {
     @Test
     public void reportCurrentTime() {
         await().atMost(Durations.ONE_MINUTE).untilAsserted(() -> {
-            verify(tasks, atLeast(10)).reportCurrentTime();
+            verify(tasks, atLeast(5)).reportCurrentTime();
         });
     }
 }

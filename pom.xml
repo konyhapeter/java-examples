@@ -12,6 +12,7 @@
     <modules>
         <module>graphql</module>
         <module>soap</module>
+        <module>scheduling</module>
     </modules>
 
     <parent>
