@@ -13,6 +13,8 @@
         <module>graphql</module>
         <module>soap</module>
         <module>scheduling</module>
+        <!-- <module>java21</module> -->
+        <module>kafka</module>
     </modules>
 
     <parent>
@@ -23,7 +25,6 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <start-class>org.example.App</start-class>
         <java.version>24</java.version>
         <lombok.version>1.18.38</lombok.version>
         <slf4j.version>2.0.17</slf4j.version>
