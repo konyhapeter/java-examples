@@ -25,6 +25,7 @@ public class Main {
         System.out.println();
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
+                .GET()
                 .uri(URI.create("https://httpbin.org/get"))
                 .build();
 
