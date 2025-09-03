@@ -12,7 +12,7 @@ query{
 }
 
 query bookDetails {
-  bookById(id: "book-1") {
+  bookById(bookId: "book-1") {
     id
     name
     pageCount

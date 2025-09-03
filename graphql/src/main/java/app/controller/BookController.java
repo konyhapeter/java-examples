@@ -21,8 +21,8 @@ public class BookController {
     private final Sinks.Many<Book> sink = Sinks.many().multicast().onBackpressureBuffer();
 
     @QueryMapping
-    public Book bookById(@Argument String id) {
-        return Book.getById(id);
+    public Book bookById(@Argument String bookId) {
+        return Book.getById(bookId);
     }
 
     @QueryMapping
@@ -41,10 +41,10 @@ public class BookController {
     }
 
     @MutationMapping
-    public Author addBookToAuthor(@Argument BookInput bookRequest) {
-        Book.addBook(bookRequest);
-        sink.tryEmitNext(Book.getById(bookRequest.id()));
-        return Author.getById(bookRequest.authorId());
+    public Author addBookToAuthor(@Argument BookInput bookInput) {
+        Book.addBook(bookInput);
+        sink.tryEmitNext(Book.getById(bookInput.id()));
+        return Author.getById(bookInput.authorId());
     }
 
     @SubscriptionMapping

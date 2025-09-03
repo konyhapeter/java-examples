@@ -1,15 +1,15 @@
 type Query {
     getAllBook: [Book]
-    bookById(id: ID): Book!
+    bookById(bookId: String!): Book!
 }
 type Mutation {
-    addBookToAuthor(bookRequest: BookInput): Author!
+    addBookToAuthor(bookInput: BookInput): Author!
 }
 input BookInput {
-    id: ID
-    name: String
-    pageCount: Int
-    authorId: String
+    id: String!
+    name: String!
+    pageCount: Int!
+    authorId: String!
 }
 
 type Subscription {
