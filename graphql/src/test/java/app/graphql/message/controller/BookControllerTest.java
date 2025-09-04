@@ -86,6 +86,7 @@ public class BookControllerTest {
                     books {
                       id
                       name
+                      pageCount
                     }
                   }
                 }
@@ -98,7 +99,15 @@ public class BookControllerTest {
                         "authorId", "author-3"
 
                 )).execute()
-                .path("addBookToAuthor.firstName").entity(String.class).isEqualTo("Bill")
-                .path("addBookToAuthor.books").entityList(Book.class).satisfies(books -> assertEquals(2, books.size(), "Books size does not match"));
+                .path("addBookToAuthor.firstName")
+                .entity(String.class).isEqualTo("Bill")
+                .path("addBookToAuthor.books")
+                .entityList(Book.class).satisfies(books ->
+                        {
+                            assertEquals(2, books.size(), "Books size does not match");
+                            List<Integer> allowedPageCounts = List.of(220, 436);
+                            books.forEach(book -> assertTrue(allowedPageCounts.contains(book.pageCount()), "Page count does not match, it was " + book.pageCount()));
+                        }
+                );
     }
 }
