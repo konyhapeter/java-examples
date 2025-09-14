@@ -9,6 +9,12 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.5.4</version>
+    </parent>
+
     <name>Spring Boot Blank Project (from https://github.com/making/spring-boot-blank)</name>
     <modules>
         <module>graphql</module>
@@ -17,13 +23,10 @@
         <!-- <module>java21</module> -->
         <module>kafka</module>
         <module>nosql</module>
+        <module>hibernate</module>
     </modules>
 
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.5.4</version>
-    </parent>
+
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

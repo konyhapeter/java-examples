@@ -30,6 +30,7 @@ public class Main {
 
         List<String> names = Arrays.asList("Anna", "Brian", "Chris");
 
+        System.out.println();
         // Using lambda
         names.forEach(name -> System.out.println(name));
         System.out.println();
