@@ -24,6 +24,7 @@
         <module>kafka</module>
         <module>nosql</module>
         <module>hibernate</module>
+        <module>webflux</module>
     </modules>
 
 
