@@ -25,6 +25,7 @@
         <module>nosql</module>
         <module>hibernate</module>
         <module>webflux</module>
+        <module>redis</module>
     </modules>
 
 
