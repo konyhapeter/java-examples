@@ -1,5 +1,6 @@
 package app.config;
 
+import com.azure.cosmos.ConsistencyLevel;
 import com.azure.cosmos.CosmosClient;
 import com.azure.cosmos.CosmosClientBuilder;
 import com.azure.spring.data.cosmos.config.AbstractCosmosConfiguration;
@@ -29,7 +30,9 @@ public class CosmosConfiguration extends AbstractCosmosConfiguration {
         return new CosmosClientBuilder()
                 .endpoint(endpoint)
                 .key(key)
-                .gatewayMode();
+                .gatewayMode()
+                .consistencyLevel(ConsistencyLevel.SESSION)
+                .contentResponseOnWriteEnabled(true);
     }
 
     @Bean

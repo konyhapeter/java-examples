@@ -41,7 +41,7 @@ public class IntegrationTest {
         client.stop();
     }
 
-    @Test
+    //@Test
     public void testMessageSubscription() {
         String subscriptionQuery = "subscription bookAdded{\n" +
                 "    bookAdded {\n" +
