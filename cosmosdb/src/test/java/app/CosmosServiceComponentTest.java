@@ -18,7 +18,7 @@ public class CosmosServiceComponentTest {
 
     @Test
     public void testGetUserWithPartitionKey() {
-        var id = "b3cf57ff-ee10-4349-9ccd-32bbff662eb4";
+        var id = "fbe08d93-ce03-47ee-9d15-8b97856480fb";
         String tenant = "B";
 
         Optional<User> user = cosmosService.GetUser(id, tenant);
@@ -26,10 +26,23 @@ public class CosmosServiceComponentTest {
     }
 
     @Test
-    public void testGetAllByTenantId(){
+    public void testGetAllByTenantId() {
         String tenant = "B";
 
         List<User> user = cosmosService.findAll(tenant);
         Assertions.assertTrue(!user.isEmpty(), "Users should not be empty");
+    }
+
+    @Test
+    public void testSaveAndGetUser() {
+        User user = cosmosService.saveOne();
+
+        Optional<User> userContainer = cosmosService.GetUser(user.getId(), user.getTenantId());
+        Assertions.assertTrue(userContainer.isPresent(), "User should not be null");
+
+        User receivedUser = userContainer.get();
+        Assertions.assertEquals(user.getId(), receivedUser.getId());
+        Assertions.assertEquals(user.getTenantId(), receivedUser.getTenantId());
+
     }
 }

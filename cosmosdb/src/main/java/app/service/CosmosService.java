@@ -4,8 +4,6 @@ import app.model.Car;
 import app.model.User;
 import app.repository.UserRepository;
 import com.azure.cosmos.models.PartitionKey;
-import com.azure.cosmos.models.PartitionKeyBuilder;
-import com.azure.cosmos.models.PartitionKeyDefinition;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,35 +30,21 @@ public class CosmosService {
     private final List<String> brands = List.of("Toyota", "BMW", "Ford", "Tesla");
     private final List<String> partitions = List.of("A", "B", "C", "D", "E", "F");
 
+    public User saveOne() {
+        User user = createUser();
+        userRepo.save(user);
+        return user;
+    }
+
     public void generateData(int count) {
 
         logger.info("Seed called with count:" + count);
 
         for (int i = 0; i < count; i++) {
-
-            String userId = UUID.randomUUID().toString();
-            List<Car> cars = new ArrayList<>();
-            // each user gets 1-3 cars
-            int carCount = random.nextInt(3) + 1;
-
-            for (int j = 0; j < carCount; j++) {
-                Car car = new Car(
-                        brands.get(random.nextInt(brands.size())),
-                        "Model-" + random.nextInt(100),
-                        random.nextInt(20)
-                );
-
-                cars.add(car);
-            }
-            User user = new User(
-                    userId,
-                    partitions.get(random.nextInt(partitions.size())),
-                    names.get(random.nextInt(names.size())),
-                    random.nextInt(60) + 18,
-                    cars,
-                    random.nextInt(10),
-                    Instant.now()
-            );
+            User user = createUser();
+            https:
+//github.com/Azure/azure-sdk-for-java/blob/main/sdk/spring/azure-spring-data-cosmos/README.md
+            //userRepo.save(user.getId(), new PartitionKey(user.getTenantId()), User.class);
             userRepo.save(user);
         }
     }
@@ -79,10 +63,36 @@ public class CosmosService {
     }
 
     public List<User> findAll(String tenantId) {
-        PartitionKey partitionKey = PartitionKey.fromItem(Map.of("tenantId", tenantId), new PartitionKeyDefinition());
-        Iterator<User> source = userRepo.findAll(partitionKey).iterator();
+        Iterator<User> source = userRepo.findAll(new PartitionKey(tenantId)).iterator();
         List<User> target = new ArrayList<>();
         source.forEachRemaining(target::add);
         return target;
+    }
+
+    public User createUser() {
+        String userId = UUID.randomUUID().toString();
+        List<Car> cars = new ArrayList<>();
+        // each user gets 1-3 cars
+        int carCount = random.nextInt(3) + 1;
+
+        for (int j = 0; j < carCount; j++) {
+            Car car = new Car(
+                    brands.get(random.nextInt(brands.size())),
+                    "Model-" + random.nextInt(100),
+                    random.nextInt(20)
+            );
+
+            cars.add(car);
+        }
+        User user = new User(
+                userId,
+                partitions.get(random.nextInt(partitions.size())),
+                names.get(random.nextInt(names.size())),
+                random.nextInt(60) + 18,
+                cars,
+                random.nextInt(10),
+                Instant.now()
+        );
+        return user;
     }
 }
