@@ -9,4 +9,8 @@ spec:
     - name: client
       image: stephengrider/multi-client
       ports:
-        - containerPort: 3000
+        - containerPort: 9999
+#kubectl apply -f .\client-pod.yaml
+#kubectl get pods
+#kubectl get pods -o wide
+#kubectl delete -f .\client-pod.yaml
