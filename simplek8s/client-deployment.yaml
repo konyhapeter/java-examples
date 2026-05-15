@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: client-deployment
 spec:
-  replicas: 5
+  replicas: 2
   selector:
     matchLabels:
       component: web
@@ -19,3 +19,5 @@ spec:
             - containerPort: 9999
 # kubectl apply -f .\client-deployment.yaml
 # kubectl get deployments
+# kubectl delete -f .\client-deployment.yaml
+# kubectl apply -f ..\simplek8s\
