@@ -1,0 +1,32 @@
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: server-deployment
+# spec:
+#   replicas: 3
+#   selector:
+#     matchLabels:
+#       component: server
+#   template:
+#     metadata:
+#       labels:
+#         component: server
+#     spec:
+#       containers:
+#         - name: server
+#           image: stephengrider/multi-server
+#           ports:
+#             - containerPort: 5000
+### multiple files into one yaml file, separated by ---
+---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: client-cluster-ip-service
+# spec:
+#   type: ClusterIP
+#   selector:
+#     component: web
+#   ports:
+#     - port: 5000
+#       targetPort: 5000

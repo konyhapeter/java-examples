@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: client
-          image: stephengrider/multi-worker
+          image: stephengrider/multi-client
           ports:
             - containerPort: 9999
 # kubectl apply -f .\client-deployment.yaml
