@@ -7,19 +7,6 @@ data:
   POSTGRES_PASSWORD: ZXhhbXBsZXBhc3N3b3Jk
 
 ---
-# apiVersion: v1
-# kind: PersistentVolumeClaim
-# metadata:
-#   name: postgres-pvc
-# spec:
-#   accessModes:
-#     - ReadWriteOnce
-#   resources:
-#     requests:
-#       storage: 1Gi
-#   storageClassName: standard
-
-# ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -34,6 +21,10 @@ spec:
       labels:
         app: postgres
     spec:
+      volumes: 
+      - name: postgres-storage
+        persistentVolumeClaim:
+          claimName: database-persistent-volume-claim
       containers:
         - name: postgres
           image: postgres
@@ -45,30 +36,11 @@ spec:
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: postgres-secret
-                  key: POSTGRES_PASSWORD
-      #       - name: POSTGRES_DB
-      #         value: mydb
-      #     volumeMounts:
-      #       - name: postgres-data
-      #         mountPath: /var/lib/postgresql/data
-      #     livenessProbe:
-      #       exec:
-      #         command:
-      #           - pg_isready
-      #           - -U
-      #           - postgres
-      #       initialDelaySeconds: 30
-      #       periodSeconds: 10
-      #     readinessProbe:
-      #       exec:
-      #         command:
-      #           - pg_isready
-      #           - -U
-      #           - postgres
-      #       initialDelaySeconds: 5
-      #       periodSeconds: 10
-      # volumes:
-      #   - name: postgres-data
-      #     persistentVolumeClaim:
-      #       claimName: postgres-pvc
+                  name: pgpassword
+                  key: PGPASSWORD
+          volumeMounts:
+            - name: postgres-storage
+              mountPath: /var/lib/postgresql
+              subPath: postgres
+
+# kubetctl get pv #persistent volumes

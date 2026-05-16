@@ -22,3 +22,7 @@ spec:
           env:
             - name: WORKER_MODE
               value: "true"
+            - name: REDIS_HOST
+              value: redis-cluster-ip-service
+            - name: REDIS_PORT
+              value: "6379"
