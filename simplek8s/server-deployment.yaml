@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: server-deployment
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       component: server
@@ -35,3 +35,9 @@ spec:
                 secretKeyRef:
                   name: pgpassword
                   key: PGPASSWORD
+          command:
+            - sh
+            - -c
+            - |
+              npm install pg@8 &&
+              npm start

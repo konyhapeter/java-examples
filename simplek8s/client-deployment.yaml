@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: client-deployment
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       component: web
@@ -13,10 +13,10 @@ spec:
         component: web
     spec:
       containers:
-        - name: client
+        - name: web
           image: stephengrider/multi-client
           ports:
-            - containerPort: 9999
+            - containerPort: 3000
 # kubectl apply -f .\client-deployment.yaml
 # kubectl get deployments
 # kubectl delete -f .\client-deployment.yaml

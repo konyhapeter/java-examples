@@ -1,15 +1,15 @@
-apiVersion: v1
-kind: Pod
-metadata:
-  name: client-pod
-  labels:
-    component: web
-spec:
-  containers:
-    - name: client
-      image: stephengrider/multi-client
-      ports:
-        - containerPort: 9999
+# apiVersion: v1
+# kind: Pod
+# metadata:
+#   name: client-pod
+#   labels:
+#     component: web
+# spec:
+#   containers:
+#     - name: client
+#       image: stephengrider/multi-client
+#       ports:
+#         - containerPort: 9999
 #kubectl apply -f .\client-pod.yaml
 #kubectl get pods
 #kubectl get pods -o wide

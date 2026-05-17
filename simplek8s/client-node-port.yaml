@@ -1,17 +1,17 @@
-apiVersion: v1
-kind: Service
-metadata:
-  name: client-node-port
-spec:
-  type: NodePort
-  ports:
-    - port: 3050
-      targetPort: 3000
-      #reachable from outside,
-      #browser  localhost:31515
-      nodePort: 31515
-  selector:
-    component: web
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: client-node-port
+# spec:
+#   type: NodePort
+#   ports:
+#     - port: 3050
+#       targetPort: 3000
+#       #reachable from outside,
+#       #browser  localhost:31515
+#       nodePort: 31515
+#   selector:
+#     component: web
 
 #Service types:
 #ClusterIP: default, reachable only within the cluster
