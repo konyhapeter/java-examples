@@ -12,3 +12,9 @@ spec:
       nodePort: 31515
   selector:
     component: web
+
+#Service types:
+#ClusterIP: default, reachable only within the cluster
+#NodePort: reachable from outside, browser localhost:31515  
+#LoadBalancer: reachable from outside, browser localhost:31515, but only in cloud environments
+#ingress: for example nginx reachable from outside, browser localhost:31515, but only in cloud environments, and can route to multiple services based on host or path 
