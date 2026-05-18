@@ -39,5 +39,5 @@ spec:
             - sh
             - -c
             - |
-              npm install pg@8 &&
+              npm install pg@7 &&
               npm start
