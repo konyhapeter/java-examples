@@ -27,6 +27,7 @@
         <module>webflux</module>
         <module>redis</module>
         <module>cosmosdb</module>
+        <module>SecurityApp</module>
     </modules>
 
 
