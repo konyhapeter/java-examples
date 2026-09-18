@@ -23,9 +23,6 @@ public class OpenApiConfig {
                         new SecurityScheme()
                                 .type(SecurityScheme.Type.OAUTH2)
                                 .flows(new OAuthFlows().password(new OAuthFlow()
-                                        .tokenUrl("http://localhost:8080/realms/security-demo/protocol/openid-connect/token")
-                                        .scopes(new Scopes()
-                                                .addString("openid", "OpenID Connect")
-                                                .addString("profile", "User profile"))))));
+                                        .tokenUrl("http://localhost:8080/realms/security-demo/protocol/openid-connect/token")))));
     }
 }
