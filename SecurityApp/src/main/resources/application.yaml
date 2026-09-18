@@ -8,6 +8,7 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: ${OAUTH2_ISSUER_URI:http://localhost:8080/realms/security-demo}
+          jwk-set-uri: ${OAUTH2_JWK_SET_URI:http://localhost:8080/realms/security-demo/protocol/openid-connect/certs}
 
 springdoc:
   swagger-ui:
