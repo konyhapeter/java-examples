@@ -14,7 +14,6 @@ springdoc:
     path: /index.html
     oauth:
       client-id: security-app
-      use-pkce-with-authorization-code-grant: true
 
 management:
   endpoints:

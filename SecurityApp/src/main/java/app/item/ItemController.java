@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/items")
-@SecurityRequirement(name = "bearer-jwt")
+@SecurityRequirement(name = "oauth2")
 public class ItemController {
 
     private final ItemService service;
