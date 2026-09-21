@@ -28,6 +28,7 @@
         <module>redis</module>
         <module>cosmosdb</module>
         <module>SecurityApp</module>
+        <module>java25</module>
     </modules>
 
 
