@@ -9,4 +9,10 @@
     <artifactId>scheduling</artifactId>
     <name>Archetype - scheduling</name>
     <url>http://maven.apache.org</url>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-quartz</artifactId>
+        </dependency>
+    </dependencies>
 </project>

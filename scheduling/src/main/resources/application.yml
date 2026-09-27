@@ -1,3 +1,5 @@
 #https://crontab.cronhub.io/
 app:
   cron: "*/2 * * * * *"
+  quartz:
+    cron: "0/10 * * * * ?"
