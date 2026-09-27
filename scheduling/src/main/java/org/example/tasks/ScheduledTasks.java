@@ -17,7 +17,7 @@ public class ScheduledTasks {
         log.info("The time is now {}", LocalTime.now());
     }
 
-    @Scheduled(fixedRate = 1)
+//    @Scheduled(fixedRate = 1)
     public void reportAtFixedRate() throws InterruptedException {
         log.info("Spring Scheduler fixed-rate task ran at {}", LocalTime.now());
         Thread.sleep(1000);

@@ -3,3 +3,36 @@ app:
   cron: "*/2 * * * * *"
   quartz:
     cron: "0/10 * * * * ?"
+    seed:
+      enabled: true
+
+spring:
+  datasource:
+    # H2 is a convenient local, persistent demo store. Use a shared PostgreSQL database for a real cluster.
+    url: "${QUARTZ_DB_URL:jdbc:h2:file:./data/quartz;AUTO_SERVER=TRUE}"
+    username: "${QUARTZ_DB_USER:sa}"
+    password: "${QUARTZ_DB_PASSWORD:}"
+    driver-class-name: "${QUARTZ_DB_DRIVER:org.h2.Driver}"
+  sql:
+    init:
+      mode: "${QUARTZ_SCHEMA_INIT_MODE:always}"
+      schema-locations: classpath:quartz-schema.sql
+  quartz:
+    job-store-type: jdbc
+    jdbc:
+      initialize-schema: never
+    overwrite-existing-jobs: false
+    wait-for-jobs-to-complete-on-shutdown: true
+    properties:
+      "org.quartz.scheduler.instanceName": clusteredQuartzScheduler
+      "org.quartz.scheduler.instanceId": AUTO
+      "org.quartz.scheduler.skipUpdateCheck": true
+      "org.quartz.scheduler.batchTriggerAcquisitionMaxCount": 5
+      "org.quartz.threadPool.threadCount": 10
+      "org.quartz.jobStore.isClustered": true
+      "org.quartz.jobStore.clusterCheckinInterval": 15000
+      "org.quartz.jobStore.misfireThreshold": 60000
+      "org.quartz.jobStore.maxMisfiresToHandleAtATime": 20
+      "org.quartz.jobStore.acquireTriggersWithinLock": true
+      "org.quartz.jobStore.driverDelegateClass": org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+      "org.quartz.jobStore.useProperties": true
