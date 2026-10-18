@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/airport}
+    username: ${SPRING_DATASOURCE_USERNAME:airport}
+    password: ${SPRING_DATASOURCE_PASSWORD:airport}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+  flyway:
+    enabled: true

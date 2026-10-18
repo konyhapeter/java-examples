@@ -30,6 +30,7 @@
         <module>cosmosdb</module>
         <module>SecurityApp</module>
         <module>java25</module>
+        <module>airport-management</module>
     </modules>
 
 
