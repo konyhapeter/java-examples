@@ -25,6 +25,7 @@
         <module>nosql</module>
         <module>hibernate</module>
         <module>webflux</module>
+        <module>concurrency</module>
         <module>redis</module>
         <module>cosmosdb</module>
         <module>SecurityApp</module>
