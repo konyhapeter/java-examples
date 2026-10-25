@@ -1,11 +1,16 @@
+server:
+  port: 8090
 spring:
   kafka:
     bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:29092}
     consumer:
       group-id: order-processing
       auto-offset-reset: earliest
+      enable-auto-commit: false
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    listener:
+      ack-mode: record
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
@@ -13,3 +18,15 @@ spring:
 app:
   kafka:
     topic: orders
+    wikimedia-topic: wiki.recent-changes
+    dead-letter-topic: wiki.recent-changes.dlt
+    retry-interval-ms: 1000
+    retry-count: 2
+  wikimedia:
+    enabled: ${WIKIMEDIA_ENABLED:false}
+    event-stream-url: ${WIKIMEDIA_EVENTSTREAM_URL:https://stream.wikimedia.org/v2/stream/recentchange}
+    retry-delay-seconds: 2
+
+logging:
+  level:
+    app: INFO

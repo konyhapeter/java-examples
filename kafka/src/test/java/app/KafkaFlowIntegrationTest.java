@@ -2,6 +2,7 @@ package app;
 
 import app.controller.KafkaController.MessageAcknowledgement;
 import app.services.KafkaConsumer;
+import app.wikimedia.WikimediaRecentChange;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ import org.testcontainers.kafka.KafkaContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
+
+import java.time.Instant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.argThat;
@@ -74,5 +77,36 @@ class KafkaFlowIntegrationTest {
         verify(kafkaConsumer, timeout(10_000)).consume(argThat(
                 (ConsumerRecord<String, String> record) ->
                         record.key().equals("order-42") && record.value().equals("shipped")));
+    }
+
+    @Test
+    void serializesWikimediaChangeAsJsonAndConsumesIt() {
+        WikimediaRecentChange change = new WikimediaRecentChange(
+                "event-123",
+                "enwiki",
+                "Spring_Framework",
+                "edit",
+                "ExampleEditor",
+                Instant.parse("2026-10-25T18:00:00Z"),
+                "https://en.wikipedia.org/wiki/Spring_Framework",
+                987654L);
+
+        ResponseEntity<MessageAcknowledgement> response = restTemplate.postForEntity(
+                "http://localhost:" + port + "/kafka/wikimedia",
+                change,
+                MessageAcknowledgement.class);
+
+        assertThat(response.getStatusCode().is2xxSuccessful()).isTrue();
+        assertThat(response.getBody()).isNotNull();
+        assertThat(response.getBody().topic()).isEqualTo("wiki.recent-changes");
+        assertThat(response.getBody().key()).isEqualTo("enwiki:Spring_Framework");
+        assertThat(response.getBody().partition()).isBetween(0, 2);
+        assertThat(response.getBody().offset()).isGreaterThanOrEqualTo(0);
+
+        verify(kafkaConsumer, timeout(10_000)).consumeWikimediaChange(argThat(
+                (ConsumerRecord<String, String> record) ->
+                        record.key().equals("enwiki:Spring_Framework")
+                                && record.value().contains("\"eventId\":\"event-123\"")
+                                && record.value().contains("\"revisionId\":987654")));
     }
 }
