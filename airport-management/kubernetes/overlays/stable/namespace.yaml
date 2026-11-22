@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: airport-management-stable
+  labels:
+    app.kubernetes.io/part-of: airport-management
+    app.kubernetes.io/environment: stable

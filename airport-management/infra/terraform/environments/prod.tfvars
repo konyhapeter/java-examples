@@ -1,0 +1,11 @@
+environment                   = "prod"
+location                      = "westeurope"
+image_tag                     = "prod"
+postgres_sku_name             = "GP_Standard_D2s_v3"
+postgres_storage_mb           = 131072
+postgres_backup_retention_days = 35
+postgres_ha_enabled           = true
+container_min_replicas        = 3
+container_max_replicas        = 10
+container_cpu                 = 2.0
+container_memory              = "4Gi"

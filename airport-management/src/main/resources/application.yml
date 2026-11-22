@@ -9,3 +9,12 @@ spring:
     open-in-view: false
   flyway:
     enabled: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: *
+  endpoint:
+    health:
+      probes:
+        enabled: true

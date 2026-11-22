@@ -1,0 +1,11 @@
+environment                   = "stable"
+location                      = "westeurope"
+image_tag                     = "stable"
+postgres_sku_name             = "GP_Standard_D2s_v3"
+postgres_storage_mb           = 65536
+postgres_backup_retention_days = 14
+postgres_ha_enabled           = false
+container_min_replicas        = 2
+container_max_replicas        = 5
+container_cpu                 = 1.0
+container_memory              = "2Gi"

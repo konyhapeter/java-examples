@@ -1,0 +1,11 @@
+environment                  = "dev"
+location                     = "westeurope"
+image_tag                    = "dev"
+postgres_sku_name            = "B_Standard_B1ms"
+postgres_storage_mb          = 32768
+postgres_backup_retention_days = 7
+postgres_ha_enabled          = false
+container_min_replicas       = 1
+container_max_replicas       = 2
+container_cpu                = 0.5
+container_memory             = "1Gi"
