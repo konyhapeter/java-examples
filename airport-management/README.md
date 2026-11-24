@@ -96,7 +96,7 @@ docker image inspect airport-management:dev
 Docker Desktop Kubernetes can use images in Docker Desktop's local image store. The dev Deployment has `imagePullPolicy: IfNotPresent`, so it will use this local image.
 
 
-3(Deprecated). Create the namespace and a Kubernetes Secret for PostgreSQL. The password is prompted securely, not saved in the manifests:
+3. Create the namespace and a Kubernetes Secret for PostgreSQL. The password is prompted securely and is not stored in the manifests:
 
 ```powershell
 kubectl apply -f airport-management\kubernetes\overlays\dev\namespace.yaml
@@ -107,7 +107,7 @@ kubectl create secret generic airport-management-db -n airport-management-dev --
 Remove-Variable pgPassword, pgPasswordSecure
 ```
 
-The command applies or updates the Secret if it already exists. Its keys must be `POSTGRES_USER` and `POSTGRES_PASSWORD`; the PostgreSQL StatefulSet and API Deployment read these exact keys. Use a PostgreSQL username made of ASCII letters, digits, or underscores, starting with a letter or underscore (for example `airportuser`); avoid quotes, dollar signs, hyphens, and backslashes. Keep the username and password for the PostgreSQL pod together; changing the Secret after PostgreSQL has initialized its persistent volume does not change the existing database user's password.
+The command applies or updates the Secret if it already exists. Its keys must be `POSTGRES_USER` and `POSTGRES_PASSWORD`; the PostgreSQL StatefulSet and API Deployment read these exact keys. Do not put credentials in the `data` section of a checked-in manifest: Kubernetes `data` values must be base64-encoded, and base64 is not encryption. Use the command above instead. Use a PostgreSQL username made of ASCII letters, digits, or underscores, starting with a letter or underscore (for example `airportuser`); avoid quotes, dollar signs, hyphens, and backslashes. Keep the username and password for the PostgreSQL pod together; changing the Secret after PostgreSQL has initialized its persistent volume does not change the existing database user's password.
 
 4. Deploy the dev overlay. This creates the PostgreSQL StatefulSet, persistent volume claim, Services, and API Deployment:
 

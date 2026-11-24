@@ -14,6 +14,15 @@ spec:
       targetPort: postgres
 ---
 apiVersion: v1
+kind: Secret
+metadata:
+  name: airport-management-db
+type: Opaque
+data:
+  POSTGRES_PASSWORD: ZXhhbXBsZXBhc3N3b3Jk
+  POSTGRES_USER: cG9zdGdyZXM=
+---
+apiVersion: v1
 kind: Service
 metadata:
   name: postgres

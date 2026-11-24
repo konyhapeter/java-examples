@@ -8,5 +8,8 @@ RUN mvn -B -f airport-management/pom.xml package -DskipTests
 FROM eclipse-temurin:25-jre-alpine
 WORKDIR /app
 COPY --from=build /workspace/airport-management/target/airport-management-1.0-SNAPSHOT.jar app.jar
+ENV SPRING_DATASOURCE_URL="jdbc:postgresql://postgres:5432/airport?sslmode=require"
+ENV SPRING_DATASOURCE_USERNAME="postgres"
+ENV SPRING_DATASOURCE_PASSWORD="ZXhhbXBsZXBhc3N3b3Jk"
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "/app/app.jar"]

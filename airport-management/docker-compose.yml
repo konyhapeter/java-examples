@@ -3,14 +3,15 @@ services:
     image: postgres:17-alpine
     environment:
       POSTGRES_DB: airport
-      POSTGRES_USER: airport
-      POSTGRES_PASSWORD: airport
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ZXhhbXBsZXBhc3N3b3Jk
     ports:
       - "5432:5432"
+    hostname: postgres
     volumes:
       - airport-postgres-data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U airport -d airport"]
+      test: ["CMD-SHELL", "pg_isready -U postgres -d airport"]
       interval: 5s
       timeout: 5s
       retries: 10
@@ -20,9 +21,9 @@ services:
       context: ..
       dockerfile: airport-management/Dockerfile
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/airport
-      SPRING_DATASOURCE_USERNAME: airport
-      SPRING_DATASOURCE_PASSWORD: airport
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/airport
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: ZXhhbXBsZXBhc3N3b3Jk
     depends_on:
       db:
         condition: service_healthy
