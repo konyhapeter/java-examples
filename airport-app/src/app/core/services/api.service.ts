@@ -16,7 +16,7 @@ import {
   providedIn: 'root'
 })
 export class ApiService {
-  private readonly apiUrl = '/api';
+  private readonly apiUrl = 'http://localhost:8080/api';
 
   constructor(private http: HttpClient) {}
 
