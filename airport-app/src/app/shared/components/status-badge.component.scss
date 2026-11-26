@@ -1,0 +1,68 @@
+.badge {
+      display: inline-block;
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .scheduled {
+      background-color: #e3f2fd;
+      color: #1565c0;
+    }
+
+    .delayed {
+      background-color: #fff3e0;
+      color: #e65100;
+    }
+
+    .boarding {
+      background-color: #f3e5f5;
+      color: #6a1b9a;
+    }
+
+    .departed {
+      background-color: #e8f5e9;
+      color: #2e7d32;
+    }
+
+    .landed {
+      background-color: #e0f2f1;
+      color: #00695c;
+    }
+
+    .cancelled {
+      background-color: #ffebee;
+      color: #c62828;
+    }
+
+    .available {
+      background-color: #c8e6c9;
+      color: #1b5e20;
+    }
+
+    .in_use {
+      background-color: #bbdefb;
+      color: #0d47a1;
+    }
+
+    .maintenance {
+      background-color: #ffe0b2;
+      color: #e65100;
+    }
+
+    .retired {
+      background-color: #bdbdbd;
+      color: #424242;
+    }
+
+    .confirmed {
+      background-color: #c8e6c9;
+      color: #1b5e20;
+    }
+
+    .checked_in {
+      background-color: #b2dfdb;
+      color: #004d40;
+    }

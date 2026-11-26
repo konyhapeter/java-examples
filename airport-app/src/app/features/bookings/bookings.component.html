@@ -1,0 +1,80 @@
+<div class="container">
+      <div class="header">
+        <h2>Bookings Management</h2>
+        <button (click)="toggleForm()" class="btn-primary">
+          {{ showForm ? 'Cancel' : '+ New Booking' }}
+        </button>
+      </div>
+
+      <app-loading [isLoading]="loading" message="Loading bookings..."></app-loading>
+
+      <div *ngIf="showForm" class="form-section">
+        <form [formGroup]="bookingForm" (ngSubmit)="submitForm()">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Passenger ID *</label>
+              <input type="number" formControlName="passengerId" class="input" />
+            </div>
+            <div class="form-group">
+              <label>Flight ID *</label>
+              <input type="number" formControlName="flightId" class="input" />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Seat Number *</label>
+              <input type="text" formControlName="seatNumber" class="input" />
+            </div>
+            <div class="form-group">
+              <label>Status *</label>
+              <select formControlName="status" class="input">
+                <option value="">Select Status</option>
+                <option *ngFor="let status of bookingStatuses" [value]="status">
+                  {{ status }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn-primary" [disabled]="!bookingForm.valid">
+              {{ editingId ? 'Update Booking' : 'Create Booking' }}
+            </button>
+            <button type="button" (click)="resetForm()" class="btn-secondary">
+              Reset
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div *ngIf="!loading && bookings.length > 0" class="table-section">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Passenger</th>
+              <th>Flight</th>
+              <th>Seat</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let b of bookings">
+              <td><strong>{{ b.passengerName }}</strong></td>
+              <td>{{ b.flightNumber }}</td>
+              <td>{{ b.seatNumber }}</td>
+              <td><app-status-badge [status]="b.status"></app-status-badge></td>
+              <td>
+                <button (click)="editBooking(b)" class="btn-edit">Edit</button>
+                <button (click)="deleteBooking(b.id)" class="btn-delete">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div *ngIf="!loading && bookings.length === 0" class="empty-state">
+        <p>No bookings found. Create one to get started!</p>
+      </div>
+    </div>

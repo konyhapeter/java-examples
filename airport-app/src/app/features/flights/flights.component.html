@@ -1,0 +1,99 @@
+<div class="container">
+      <div class="header">
+        <h2>Flights Management</h2>
+        <button (click)="toggleForm()" class="btn-primary">
+          {{ showForm ? 'Cancel' : '+ New Flight' }}
+        </button>
+      </div>
+
+      <app-loading [isLoading]="loading" message="Loading flights..."></app-loading>
+
+      <div *ngIf="showForm" class="form-section">
+        <form [formGroup]="flightForm" (ngSubmit)="submitForm()">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Flight Number *</label>
+              <input type="text" formControlName="flightNumber" class="input" />
+            </div>
+            <div class="form-group">
+              <label>Origin *</label>
+              <input type="text" formControlName="origin" class="input" />
+            </div>
+            <div class="form-group">
+              <label>Destination *</label>
+              <input type="text" formControlName="destination" class="input" />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Departure Time *</label>
+              <input type="datetime-local" formControlName="departureTime" class="input" />
+            </div>
+            <div class="form-group">
+              <label>Arrival Time *</label>
+              <input type="datetime-local" formControlName="arrivalTime" class="input" />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Status *</label>
+              <select formControlName="status" class="input">
+                <option value="">Select Status</option>
+                <option *ngFor="let status of flightStatuses" [value]="status">
+                  {{ status }}
+                </option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Aircraft ID *</label>
+              <input type="number" formControlName="aircraftId" class="input" />
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn-primary" [disabled]="!flightForm.valid">
+              {{ editingId ? 'Update Flight' : 'Create Flight' }}
+            </button>
+            <button type="button" (click)="resetForm()" class="btn-secondary">
+              Reset
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div *ngIf="!loading && flights.length > 0" class="table-section">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Flight #</th>
+              <th>Route</th>
+              <th>Aircraft</th>
+              <th>Departure</th>
+              <th>Arrival</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let flight of flights">
+              <td><strong>{{ flight.flightNumber }}</strong></td>
+              <td>{{ flight.origin }} → {{ flight.destination }}</td>
+              <td>{{ flight.aircraftRegistration }}</td>
+              <td>{{ flight.departureTime | dateFormat }}</td>
+              <td>{{ flight.arrivalTime | dateFormat }}</td>
+              <td><app-status-badge [status]="flight.status"></app-status-badge></td>
+              <td>
+                <button (click)="editFlight(flight)" class="btn-edit">Edit</button>
+                <button (click)="deleteFlight(flight.id)" class="btn-delete">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div *ngIf="!loading && flights.length === 0" class="empty-state">
+        <p>No flights found. Create one to get started!</p>
+      </div>
+    </div>

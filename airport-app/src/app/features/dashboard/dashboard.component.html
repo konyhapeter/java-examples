@@ -1,0 +1,90 @@
+<div class="container">
+      <h1>Dashboard</h1>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-value">{{ flightCount }}</div>
+          <div class="stat-label">Total Flights</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">{{ aircraftCount }}</div>
+          <div class="stat-label">Aircraft</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">{{ passengerCount }}</div>
+          <div class="stat-label">Passengers</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">{{ bookingCount }}</div>
+          <div class="stat-label">Bookings</div>
+        </div>
+      </div>
+
+      <div class="content-grid">
+        <div class="card">
+          <h3>Upcoming Flights</h3>
+          <app-loading [isLoading]="loading" message="Loading flights..."></app-loading>
+          <div *ngIf="!loading && upcomingFlights.length > 0" class="flight-list">
+            <div *ngFor="let flight of upcomingFlights.slice(0, 5)" class="flight-item">
+              <div class="flight-info">
+                <strong>{{ flight.flightNumber }}</strong>
+                <span class="route">{{ flight.origin }} → {{ flight.destination }}</span>
+              </div>
+              <div class="flight-time">
+                {{ flight.departureTime | dateFormat }}
+              </div>
+              <app-status-badge [status]="flight.status"></app-status-badge>
+            </div>
+          </div>
+          <div *ngIf="!loading && upcomingFlights.length === 0" class="empty">
+            No upcoming flights
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Aircraft Status</h3>
+          <app-loading [isLoading]="loading" message="Loading aircraft..."></app-loading>
+          <div *ngIf="!loading && aircraft.length > 0" class="status-breakdown">
+            <div class="status-item" *ngFor="let status of aircraftStatuses">
+              <span class="label">{{ status }}</span>
+              <span class="count">{{ getAircraftCount(status) }}</span>
+            </div>
+          </div>
+          <div *ngIf="!loading && aircraft.length === 0" class="empty">
+            No aircraft available
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Booking Status</h3>
+          <app-loading [isLoading]="loading" message="Loading bookings..."></app-loading>
+          <div *ngIf="!loading && bookings.length > 0" class="status-breakdown">
+            <div class="status-item" *ngFor="let status of bookingStatuses">
+              <span class="label">{{ status }}</span>
+              <span class="count">{{ getBookingCount(status) }}</span>
+            </div>
+          </div>
+          <div *ngIf="!loading && bookings.length === 0" class="empty">
+            No bookings available
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Recent Bookings</h3>
+          <app-loading [isLoading]="loading" message="Loading bookings..."></app-loading>
+          <div *ngIf="!loading && bookings.length > 0" class="booking-list">
+            <div *ngFor="let booking of bookings.slice(0, 5)" class="booking-item">
+              <div class="booking-info">
+                <strong>{{ booking.passengerName }}</strong>
+                <span class="flight">Flight {{ booking.flightNumber }}</span>
+                <span class="seat">Seat {{ booking.seatNumber }}</span>
+              </div>
+              <app-status-badge [status]="booking.status"></app-status-badge>
+            </div>
+          </div>
+          <div *ngIf="!loading && bookings.length === 0" class="empty">
+            No bookings available
+          </div>
+        </div>
+      </div>
+    </div>

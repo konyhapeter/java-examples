@@ -5,25 +5,7 @@ import { HeaderComponent } from '@shared/components/header.component';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent],
-  template: `
-    <app-header></app-header>
-    <main>
-      <router-outlet></router-outlet>
-    </main>
-  `,
-  styles: [`
-    :host {
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-
-    main {
-      flex: 1;
-      background-color: #fafafa;
-    }
-  `]
+  imports: [RouterOutlet, HeaderComponent],  templateUrl: './app.component.html',  styleUrl: './app.component.scss'
 })
 export class AppComponent {
   title = 'airport-app';

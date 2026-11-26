@@ -1,0 +1,73 @@
+<div class="container">
+      <div class="header">
+        <h2>Passengers Management</h2>
+        <button (click)="toggleForm()" class="btn-primary">
+          {{ showForm ? 'Cancel' : '+ New Passenger' }}
+        </button>
+      </div>
+
+      <app-loading [isLoading]="loading" message="Loading passengers..."></app-loading>
+
+      <div *ngIf="showForm" class="form-section">
+        <form [formGroup]="passengerForm" (ngSubmit)="submitForm()">
+          <div class="form-row">
+            <div class="form-group">
+              <label>First Name *</label>
+              <input type="text" formControlName="firstName" class="input" />
+            </div>
+            <div class="form-group">
+              <label>Last Name *</label>
+              <input type="text" formControlName="lastName" class="input" />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Email *</label>
+              <input type="email" formControlName="email" class="input" />
+            </div>
+            <div class="form-group">
+              <label>Passport Number *</label>
+              <input type="text" formControlName="passportNumber" class="input" />
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn-primary" [disabled]="!passengerForm.valid">
+              {{ editingId ? 'Update Passenger' : 'Create Passenger' }}
+            </button>
+            <button type="button" (click)="resetForm()" class="btn-secondary">
+              Reset
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div *ngIf="!loading && passengers.length > 0" class="table-section">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Passport</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let p of passengers">
+              <td><strong>{{ p.firstName }} {{ p.lastName }}</strong></td>
+              <td>{{ p.email }}</td>
+              <td>{{ p.passportNumber }}</td>
+              <td>
+                <button (click)="editPassenger(p)" class="btn-edit">Edit</button>
+                <button (click)="deletePassenger(p.id)" class="btn-delete">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div *ngIf="!loading && passengers.length === 0" class="empty-state">
+        <p>No passengers found. Add one to get started!</p>
+      </div>
+    </div>
