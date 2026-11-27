@@ -22,6 +22,7 @@
       "ES2022",
       "dom"
     ],
+    "types": ["jasmine"],
     "paths": {
       "@core/*": ["src/app/core/*"],
       "@shared/*": ["src/app/shared/*"],

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ApiService } from '@core/services/api.service';
-import { Flight, FlightRequest, FlightStatus, AircraftStatus } from '@core/models';
+import { Aircraft, Flight, FlightRequest, FlightStatus } from '@core/models';
 import { LoadingComponent } from '@shared/components/loading.component';
 import { StatusBadgeComponent } from '@shared/components/status-badge.component';
 import { DateFormatPipe } from '@shared/pipes/date-format.pipe';
@@ -20,7 +20,10 @@ import { DateFormatPipe } from '@shared/pipes/date-format.pipe';
 })
 export class FlightsComponent implements OnInit {
   flights: Flight[] = [];
+  aircraft: Aircraft[] = [];
   loading = false;
+  aircraftLoading = false;
+  aircraftLoadError = false;
   showForm = false;
   editingId: number | null = null;
 
@@ -38,12 +41,34 @@ export class FlightsComponent implements OnInit {
       departureTime: ['', Validators.required],
       arrivalTime: ['', Validators.required],
       status: ['', Validators.required],
-      aircraftId: ['', Validators.required]
+      aircraftId: [null, Validators.required]
     });
   }
 
   ngOnInit(): void {
     this.loadFlights();
+    this.loadAircraft();
+  }
+
+  get aircraftSelectionAvailable(): boolean {
+    const aircraftId = this.flightForm.get('aircraftId')?.value;
+    return this.aircraft.some(aircraft => aircraft.id === aircraftId);
+  }
+
+  loadAircraft(): void {
+    this.aircraftLoading = true;
+    this.aircraftLoadError = false;
+    this.apiService.getAircraft().subscribe({
+      next: (aircraft) => {
+        this.aircraft = aircraft;
+        this.aircraftLoading = false;
+      },
+      error: (err) => {
+        console.error('Error loading aircraft:', err);
+        this.aircraftLoadError = true;
+        this.aircraftLoading = false;
+      }
+    });
   }
 
   loadFlights(): void {
@@ -72,7 +97,7 @@ export class FlightsComponent implements OnInit {
   }
 
   submitForm(): void {
-    if (!this.flightForm.valid) return;
+    if (!this.flightForm.valid || this.aircraftLoading || this.aircraftLoadError || !this.aircraftSelectionAvailable) return;
 
     const formValue = this.flightForm.value;
     const request: FlightRequest = {

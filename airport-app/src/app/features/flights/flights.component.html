@@ -47,13 +47,27 @@
               </select>
             </div>
             <div class="form-group">
-              <label>Aircraft ID *</label>
-              <input type="number" formControlName="aircraftId" class="input" />
+              <label for="aircraft">Aircraft *</label>
+              <select id="aircraft" formControlName="aircraftId" class="input">
+                <option [ngValue]="null">Select Aircraft</option>
+                <option *ngFor="let plane of aircraft" [ngValue]="plane.id">
+                  {{ plane.model }} - {{ plane.registration }}
+                </option>
+              </select>
+              <p *ngIf="aircraftLoading">Loading aircraft...</p>
+              <p *ngIf="aircraftLoadError" role="alert">
+                Could not load aircraft.
+                <button type="button" (click)="loadAircraft()">Retry</button>
+              </p>
+              <p *ngIf="!aircraftLoading && !aircraftLoadError && aircraft.length === 0">No aircraft available.</p>
+              <p *ngIf="!aircraftLoading && !aircraftLoadError && flightForm.get('aircraftId')?.value != null && !aircraftSelectionAvailable" role="alert">
+                The selected aircraft is no longer available. Please select another aircraft.
+              </p>
             </div>
           </div>
 
           <div class="form-actions">
-            <button type="submit" class="btn-primary" [disabled]="!flightForm.valid">
+            <button type="submit" class="btn-primary" [disabled]="!flightForm.valid || aircraftLoading || aircraftLoadError || !aircraftSelectionAvailable">
               {{ editingId ? 'Update Flight' : 'Create Flight' }}
             </button>
             <button type="button" (click)="resetForm()" class="btn-secondary">
