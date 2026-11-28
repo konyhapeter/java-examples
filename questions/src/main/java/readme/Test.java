@@ -45,6 +45,39 @@ void main() {
             .flatMap(List::stream)
             .toList(); // [a, b, c]
     System.out.println(all);
+
+
+    //java 8
+    // Lambda expression implements a functional interface.
+    Greeting greeting = name -> "Hello, " + name;
+    System.out.println(greeting.greet("Ada"));
+
+    List<Person> people = Arrays.asList(
+            new Person("Ada", 36),
+            new Person("Linus", 17),
+            new Person("Grace", 40));
+
+    // Predicate is a built-in functional interface; streams compose operations.
+    Predicate<Person> isAdult = person -> person.getAge() >= 18;
+    List<String> adultNames = people.stream()
+            .filter(isAdult)
+            .map(Person::getName)
+            .collect(Collectors.toList());
+    System.out.println(adultNames);
+
+    // findFirst returns Optional, avoiding a null result when there is no match.
+    Optional<String> firstAdult = people.stream()
+            .filter(isAdult)
+            .map(Person::getName)
+            .findFirst();
+    System.out.println(firstAdult.orElse("No adult found"));
+
+    // java.time provides immutable date and time types.
+    LocalDate today = LocalDate.now();
+    LocalDate birthday = LocalDate.of(1990, 5, 20);
+    Period age = Period.between(birthday, today);
+    String formattedDate = today.format(DateTimeFormatter.ISO_LOCAL_DATE);
+    System.out.println("Age: " + age.getYears() + ", today: " + formattedDate);
 }
 
 sealed interface Shape permits Circle, Rectangle {
@@ -92,4 +125,22 @@ class DogKennel extends Kennel {
     Dog adopt() {
         return new Dog();
     }
+}
+//java 8
+@FunctionalInterface
+interface Greeting {
+    String greet(String name);
+}
+
+static class Person {
+    private final String name;
+    private final int age;
+
+    Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    String getName() { return name; }
+    int getAge() { return age; }
 }

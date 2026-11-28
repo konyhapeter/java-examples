@@ -12,19 +12,72 @@ These are feature highlights, not an exhaustive list. Java 8 is a widely used fe
 | Java 21 | Virtual threads, sequenced collections, record patterns, and pattern matching for `switch` became final. |
 | Java 25 | LTS release; module import declarations, compact source files and instance `main` methods, flexible constructor bodies, and scoped values became final. |
 
-```java
-// Java 8: lambda and stream
-List<String> names = people.stream()
-        .map(Person::name)
-        .toList(); // toList() was added later; use Collectors.toList() on Java 8
-```
+### Java 8 feature examples
 
-For code that must compile on Java 8, replace the last line with:
+This self-contained example demonstrates lambdas, a custom functional interface, Streams, `Optional`, and the `java.time` API. It uses `Collectors.toList()`, which is available in Java 8.
 
 ```java
-List<String> names = people.stream()
-        .map(Person::name)
-        .collect(Collectors.toList());
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+
+public class Java8Features {
+    @FunctionalInterface
+    interface Greeting {
+        String greet(String name);
+    }
+
+    static class Person {
+        private final String name;
+        private final int age;
+
+        Person(String name, int age) {
+            this.name = name;
+            this.age = age;
+        }
+
+        String getName() { return name; }
+        int getAge() { return age; }
+    }
+
+    public static void main(String[] args) {
+        // Lambda expression implements a functional interface.
+        Greeting greeting = name -> "Hello, " + name;
+        System.out.println(greeting.greet("Ada"));
+
+        List<Person> people = Arrays.asList(
+                new Person("Ada", 36),
+                new Person("Linus", 17),
+                new Person("Grace", 40));
+
+        // Predicate is a built-in functional interface; streams compose operations.
+        Predicate<Person> isAdult = person -> person.getAge() >= 18;
+        List<String> adultNames = people.stream()
+                .filter(isAdult)
+                .map(Person::getName)
+                .collect(Collectors.toList());
+        System.out.println(adultNames);
+
+        // findFirst returns Optional, avoiding a null result when there is no match.
+        Optional<String> firstAdult = people.stream()
+                .filter(isAdult)
+                .map(Person::getName)
+                .findFirst();
+        System.out.println(firstAdult.orElse("No adult found"));
+
+        // java.time provides immutable date and time types.
+        LocalDate today = LocalDate.now();
+        LocalDate birthday = LocalDate.of(1990, 5, 20);
+        Period age = Period.between(birthday, today);
+        String formattedDate = today.format(DateTimeFormatter.ISO_LOCAL_DATE);
+        System.out.println("Age: " + age.getYears() + ", today: " + formattedDate);
+    }
+}
 ```
 
 ## 2. Explain the contract between `equals()` and `hashCode()`.
