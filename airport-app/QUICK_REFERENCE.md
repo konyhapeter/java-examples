@@ -290,7 +290,7 @@ deleteItem(id: number) {
 ## ⏱️ Typical Workflow
 
 1. **Start**: `npm start` → http://localhost:4200
-2. **Create Test Data**: Add aircraft → Add flights → Add passengers
+2. **Create readme.Test Data**: Add aircraft → Add flights → Add passengers
 3. **Create Bookings**: Link passengers to flights
 4. **Monitor**: Check Dashboard for overview
 5. **Manage**: Edit/Delete as needed

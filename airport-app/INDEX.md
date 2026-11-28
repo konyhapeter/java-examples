@@ -112,7 +112,7 @@ npm test               # Run unit tests
 - [ ] Run `npm start`
 - [ ] Navigate to http://localhost:4200
 - [ ] Create test data (aircraft, flights, passengers, bookings)
-- [ ] Test all CRUD operations
+- [ ] readme.Test all CRUD operations
 - [ ] Review PROJECT_STRUCTURE.md for code organization
 
 ---
@@ -171,7 +171,7 @@ Configured endpoints:
 1. **Understand**: Read documentation (start with GETTING_STARTED.md)
 2. **Setup**: Run `npm install` && `npm start`
 3. **Create Data**: Add test aircraft, flights, passengers
-4. **Test Features**: Create bookings, test CRUD operations
+4. **readme.Test Features**: Create bookings, test CRUD operations
 5. **Develop**: Modify components in `src/app/`
 6. **Build**: Run `npm run build` for production
 

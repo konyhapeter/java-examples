@@ -17,7 +17,7 @@ C:\Users\Pett\IdeaProjects\SpringDemos\airport-app\
 - ✅ `angular.json` - Angular CLI configuration
 - ✅ `tsconfig.json` - TypeScript configuration
 - ✅ `proxy.conf.json` - Development proxy (points to localhost:8080)
-- ✅ `karma.conf.js` - Test runner configuration
+- ✅ `karma.conf.js` - readme.Test runner configuration
 
 ### Source Code
 
@@ -253,7 +253,7 @@ Before using in production:
 - [ ] Start backend API on port 8080
 - [ ] Run dev server: `npm start`
 - [ ] Navigate to http://localhost:4200
-- [ ] Test dashboard loads correctly
+- [ ] readme.Test dashboard loads correctly
 - [ ] Create test aircraft
 - [ ] Create test flight
 - [ ] Create test passenger

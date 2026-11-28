@@ -49,7 +49,7 @@ airport-app/
 ├── tsconfig.json                            # TypeScript configuration
 ├── tsconfig.app.json                        # App-specific TypeScript config
 ├── tsconfig.spec.json                       # Testing TypeScript config
-├── karma.conf.js                            # Test runner configuration
+├── karma.conf.js                            # readme.Test runner configuration
 ├── proxy.conf.json                          # Development proxy config
 ├── package.json                             # Dependencies and scripts
 ├── .gitignore                               # Git ignore file
